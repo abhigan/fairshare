@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<request>
+	<command>editrule</command>
+	<rulename>limme</rulename>
+	<ruleset>
+		<rule name="limme" active="1" direction="0" protocol="3" interface="0" rate-type="0" rate-id="0" rate="?RATE" rate2="0" combined="0" penality="0" timetable-id="0" mapping-id="0">
+			<mapping-filter type="0" count="0"/>
+			<date-bound>
+				<active>always</active>
+				<date>40891</date>
+			</date-bound>
+			<stats>
+				<total since="1899-12-30T00-00-00" traffic-in-lo="0" traffic-in-hi="0" traffic-out-lo="0" traffic-out-hi="0"/>
+			</stats>
+			<ip-source-address type="3" address-1="0.0.0.0" address-2="0.0.0.0" macaddr="000000000000" group-id="0" invert="0"/>
+			<ip-source-port type="0" count="0" invert="0"/>
+			<ip-destination-address type="0" address-1="0.0.0.0" address-2="0.0.0.0" macaddr="000000000000" group-id="0" invert="0"/>
+			<ip-destination-port type="0" count="0" invert="0"/>
+			<penalty>
+				<item type="long">
+					<condition>1000</condition>
+					<coefficient>50</coefficient>
+					<enabled>False</enabled>
+				</item>
+				<item type="large">
+					<condition>1000</condition>
+					<coefficient>50</coefficient>
+					<enabled>False</enabled>
+				</item>
+				<item type="conections">
+					<condition>1000</condition>
+					<coefficient>50</coefficient>
+					<enabled>False</enabled>
+				</item>
+			</penalty>
+			<queue>
+				<custom>False</custom>
+				<size>500</size>
+			</queue>
+			<quota>
+				<usage>
+					<allowed>
+						<primary>0</primary>
+						<secondary>0</secondary>
+					</allowed>
+					<used>
+						<primary>0</primary>
+						<secondary>0</secondary>
+					</used>
+				</usage>
+			</quota>
+			<webstats>
+				<password/>
+			</webstats>
+			<notifications>
+				<email/>
+				<items/>
+			</notifications>
+		</rule>
+	</ruleset>
+</request>
