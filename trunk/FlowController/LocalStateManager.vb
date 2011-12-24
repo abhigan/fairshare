@@ -30,7 +30,7 @@ Public Class LocalStateManager
                 usg.Consumption = m_state.Consumption
                 usg.Roof = m_state.Roof
                 usg.TimeStamp = m_state.TimeStamp
-                usg.User = m_state.User
+                usg.UserIP = m_state.UserIP
                 If usg.Roof = 0 Then usg.Roof = PIPEWIDTH
                 Return usg
             End SyncLock

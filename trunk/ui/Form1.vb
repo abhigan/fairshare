@@ -24,9 +24,9 @@ Public Class Form1
         Dim usage As New ArrayList
         Dim used As Integer = 0
         For Each usr In NetState
-            TextBox1.Text = TextBox1.Text & String.Format("{0,-15}{1,6}", usr.User, usr.Consumption) & vbCrLf
+            TextBox1.Text = TextBox1.Text & String.Format("{0,-15}{1,6}", usr.UserIP, usr.Consumption) & vbCrLf
             used += usr.Consumption
-            users.Add(usr.User)
+            users.Add(usr.UserIP)
             usage.Add(usr.Consumption)
         Next
 

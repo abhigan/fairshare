@@ -44,7 +44,16 @@ Class SelfGovernor
         Console.WriteLine(vbCrLf & "roof:{0,-8} legal:{3,-8} usg:{1,-8} available:{2,-8} pipe:{4,-8}",
                          Int(currentStat.Roof / 1024), Int(currentStat.Consumption / 1024), Int(availableInNetwork / 1024), Int(myLegalShare / 1024), Int(PIPEWIDTH / 1024))
 
-        Return myUsageStatistics.Roof ' same as that was before
+        Dim totalBanwidth = PIPEWIDTH
+        Dim usableBandwidth = PIPEWIDTH - BAREMINIMUM
+
+        'for the time being let us not consider ourselves
+        Dim exceptMine = From netstate As UsageStatistics In networkState Where netstate.isMe = False Select netstate
+
+        'we must give BAREMINIMUM to those who are IDLE
+        Dim idles = From netstate As UsageStatistics In exceptMine Where netstate.Consumption < BAREMINIMUM Select netstate
+        Dim reservedforidlers = idles.Count * BAREMINIMUM
+
 
     End Function
 
