@@ -28,7 +28,7 @@ Class Receiver
             remoteStat.Roof = msg2(0)
             remoteStat.Consumption = msg2(1)
             remoteStat.TimeStamp = Now
-            remoteStat.User = remoteHost.Address.ToString
+            remoteStat.UserIP = remoteHost.Address.ToString
 
             RaiseEvent Received(remoteStat)
         End While

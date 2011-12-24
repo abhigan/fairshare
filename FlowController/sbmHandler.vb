@@ -19,7 +19,7 @@ Class sbmHandler
         myUsageStatistics.Consumption = Math.Min(avUsage, roof)
         myUsageStatistics.Roof = roof
         myUsageStatistics.TimeStamp = Now
-        myUsageStatistics.User = "127.0.0.1"
+        myUsageStatistics.UserIP = "127.0.0.1"
 
         Return myUsageStatistics
     End Function

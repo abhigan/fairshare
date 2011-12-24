@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.Serialization
+Imports System.Net
+
 
 Public Class Globals
     Public Const PIPEWIDTH As Integer = (130 - 70) * 1024 ' bytes per second
@@ -15,9 +17,24 @@ Public Class Globals
 
     <Serializable()>
     Public Class UsageStatistics
-        Public User As String
-        Public Roof As Integer
-        Public Consumption As Integer
-        Public TimeStamp As DateTime
+        Public Property UserIP As String = String.Empty
+        Public Property Roof As Integer = PIPEWIDTH
+        Public Property Consumption As Integer = 0
+        Public Property TimeStamp As Date = Now
+
+        Public ReadOnly Property isMe As Boolean
+            Get
+                Dim myname = Dns.GetHostName
+                Dim myentry = Dns.GetHostEntry(myname)
+                For Each ipAddr In myentry.AddressList
+                    If ipAddr.AddressFamily = Sockets.AddressFamily.InterNetwork Then
+                        If UserIP = ipAddr.ToString Then
+                            Return True
+                        End If
+                    End If
+                Next
+                Return False
+            End Get
+        End Property
     End Class
 End Class

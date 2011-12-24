@@ -61,23 +61,15 @@ Public Class NetworkStateProvider
 
     Private Sub receiver_Received(ByVal RemoteStatistics As UsageStatistics) Handles m_receiver.Received
         SyncLock m_networkState_lock
-            If m_networkState.ContainsKey(RemoteStatistics.User.ToLower) Then
+            If m_networkState.ContainsKey(RemoteStatistics.UserIP.ToLower) Then
                 'we replace the existing
-                m_networkState.Item(RemoteStatistics.User.ToLower) = RemoteStatistics
+                m_networkState.Item(RemoteStatistics.UserIP.ToLower) = RemoteStatistics
 
             Else ' we add this user
-                m_networkState.Add(RemoteStatistics.User.ToLower, RemoteStatistics)
+                m_networkState.Add(RemoteStatistics.UserIP.ToLower, RemoteStatistics)
             End If
         End SyncLock
     End Sub
-
-    Function getUsersWithIllegalRoof() As UsageStatistics()
-        Dim presentNetState = getNetworkState()
-        Dim illealRoofers = From stats As UsageStatistics In presentNetState Where (stats.Roof > getMyLegalSshare()) Select stats
-
-        Dim illealRoofers2() = illealRoofers.ToArray
-        Return illealRoofers2
-    End Function
 
     Function getMyLegalSshare() As Integer
         Dim share As Integer
