@@ -1,0 +1,5 @@
+       FairShare bandwidth manager
+
+(c) Anshuman Chatterjee & Abhishek Ganguly
+                 2011
+

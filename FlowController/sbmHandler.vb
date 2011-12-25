@@ -21,7 +21,8 @@ Class sbmHandler
         myUsageStatistics.TimeStamp = Now
         myUsageStatistics.UserIP = "127.0.0.1"
 
-        myUsageStatistics.Consumption = Math.Max(myUsageStatistics.Consumption, 30 * 1024)
+        'myUsageStatistics.Consumption = Math.Max(myUsageStatistics.Consumption, 30 * 1024)
+        myUsageStatistics.Consumption = myUsageStatistics.Consumption
         Return myUsageStatistics
     End Function
 

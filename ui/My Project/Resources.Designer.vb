@@ -59,5 +59,19 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to        FairShare bandwidth manager
+        '''
+        '''(c) Anshuman Chatterjee &amp; Abhishek Ganguly
+        '''                 2011
+        '''
+        '''.
+        '''</summary>
+        Friend ReadOnly Property About() As String
+            Get
+                Return ResourceManager.GetString("About", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace
