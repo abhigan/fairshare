@@ -3,7 +3,7 @@ Imports System.Net
 
 
 Public Class Globals
-    Public Const PIPEWIDTH As Integer = (130 - 70) * 1024 ' bytes per second
+    Public Const PIPEWIDTH As Integer = (130) * 1024 ' bytes per second
 
     Public Const BAREMINIMUM As Integer = 10 * 1024 ' bytes per second
     Public Const HOARDING As Integer = 70 ' %
@@ -23,12 +23,6 @@ Public Class Globals
         Public Property Consumption As Integer = 0
         Public Property TimeStamp As Date = Now
         Public Property UserSignature As Guid
-
-        Public ReadOnly Property ConsumptionPercent As Integer
-            Get
-                Return (Consumption * 100) / Roof
-            End Get
-        End Property
 
         Public Overrides Function Equals(ByVal obj As Object) As Boolean
             If Not TypeOf (obj) Is UsageStatistics Then

@@ -14,7 +14,7 @@ Public Class Transmitter
 
     Private Sub sender_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles sender.DoWork
         Dim endPoint As New IPEndPoint(IPAddress.Broadcast, LISTNER_PORT)
-        Dim localendpoint As New IPEndPoint(IPAddress.Parse("192.168.1.5"), 4040)
+        Dim localendpoint As New IPEndPoint(IPAddress.Parse("192.168.1.3"), 4040)
         Dim udpSender As New UdpClient(localendpoint)
         While True
             Dim myStats As UsageStatistics = LocalStateManager.getManager.Usage
