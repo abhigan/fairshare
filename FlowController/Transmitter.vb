@@ -14,11 +14,11 @@ Public Class Transmitter
 
     Private Sub sender_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles sender.DoWork
         Dim endPoint As New IPEndPoint(IPAddress.Broadcast, LISTNER_PORT)
-        Dim udpSender As New UdpClient()
-
+        Dim localendpoint As New IPEndPoint(IPAddress.Parse("192.168.1.5"), 4040)
+        Dim udpSender As New UdpClient(localendpoint)
         While True
             Dim myStats As UsageStatistics = LocalStateManager.getManager.Usage
-            Dim msg = myStats.Roof & "#" & myStats.Consumption
+            Dim msg = myStats.Roof & "#" & myStats.Consumption & "#" & myStats.UserSignature.ToString
             Dim txData() As Byte = System.Text.Encoding.ASCII.GetBytes(msg)
             udpSender.Send(txData, txData.Length, endPoint)
             Threading.Thread.Sleep(POLLING_INTERVAL)

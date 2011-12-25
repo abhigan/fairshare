@@ -27,6 +27,7 @@ Class Receiver
             Dim msg2() = msg.Split("#")
             remoteStat.Roof = msg2(0)
             remoteStat.Consumption = msg2(1)
+            remoteStat.UserSignature = Guid.Parse(msg2(2))
             remoteStat.TimeStamp = Now
             remoteStat.UserIP = remoteHost.Address.ToString
 

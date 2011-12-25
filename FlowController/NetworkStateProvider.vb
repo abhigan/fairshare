@@ -71,16 +71,6 @@ Public Class NetworkStateProvider
         End SyncLock
     End Sub
 
-    Function getMyLegalSshare() As Integer
-        Dim share As Integer
-        Dim netState As UsageStatistics() = getNetworkState()
-        If netState.Count > 0 Then
-            share = (PIPEWIDTH - BAREMINIMUM) / netState.Count
-        Else
-            share = PIPEWIDTH - BAREMINIMUM
-        End If
-        Return share
-    End Function
 End Class
 
 Public Class RemoteNetworkStateProvider
