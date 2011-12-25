@@ -3,7 +3,7 @@ Imports System.Net
 
 
 Public Class Globals
-    Public Const PIPEWIDTH As Integer = (130 - 70) * 1024 ' bytes per second
+    Public Const PIPEWIDTH As Integer = (130) * 1024 ' bytes per second
 
     Public Const BAREMINIMUM As Integer = 10 * 1024 ' bytes per second
     Public Const HOARDING As Integer = 70 ' %
