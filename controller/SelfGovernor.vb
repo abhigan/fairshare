@@ -42,14 +42,11 @@ Class SelfGovernor
         '---------------------------------------------------------------
         '=====================      I D L E     ========================
         '---------------------------------------------------------------
-        'we must give BAREMINIMUM to those who are IDLE
+        'the IDLErs are free to consume that what is left in pipe (BAREMINIMUM)
         Dim limitOfLaziness As Integer = (9 * BAREMINIMUM) / 10 ' that is 90% of BAREMINIMUM
         If myUsageStatistics.Consumption < limitOfLaziness Then Return myUsageStatistics.Roof
         Dim idleUsers = From netstate As UsageStatistics In networkState Where netstate.Consumption < limitOfLaziness Select netstate
         Dim activeUsers = networkState.Except(idleUsers)
-        Dim reservedForIdlers = idleUsers.Count * BAREMINIMUM
-        'thus
-        usableBandwidth -= reservedForIdlers
 
 
 
@@ -95,6 +92,7 @@ Class SelfGovernor
         Dim heavyDownloaders = activeUsers.Except(moderateUses)
         'all of the usabeBandwidth will be distributed evenly among these heavyDownloaders
         Dim lionsShare As Integer = usableBandwidth / heavyDownloaders.Count  '  <<<<<<<<<<<<----------watch-out for devide by zero
+        Console.WriteLine("heavy downloaders " & heavyDownloaders.Count)
         If (From user As UsageStatistics In heavyDownloaders Where LocalStateManager.getManager.IsMyStatistcs(user) = True).Count = 1 Then Return lionsShare
 
         Throw New ApplicationException("how come i am nowhere")
