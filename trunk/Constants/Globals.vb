@@ -17,24 +17,29 @@ Public Class Globals
 
     <Serializable()>
     Public Class UsageStatistics
+
         Public Property UserIP As String = String.Empty
         Public Property Roof As Integer = PIPEWIDTH
         Public Property Consumption As Integer = 0
         Public Property TimeStamp As Date = Now
+        Public Property UserSignature As Guid
 
-        Public ReadOnly Property isMe As Boolean
+        Public ReadOnly Property ConsumptionPercent As Integer
             Get
-                Dim myname = Dns.GetHostName
-                Dim myentry = Dns.GetHostEntry(myname)
-                For Each ipAddr In myentry.AddressList
-                    If ipAddr.AddressFamily = Sockets.AddressFamily.InterNetwork Then
-                        If UserIP = ipAddr.ToString Then
-                            Return True
-                        End If
-                    End If
-                Next
-                Return False
+                Return (Consumption * 100) / Roof
             End Get
         End Property
+
+        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+            If Not TypeOf (obj) Is UsageStatistics Then
+                Return MyBase.Equals(obj)
+            Else
+                Dim second As UsageStatistics = obj
+                Return second.UserIP.Equals(Me.UserIP)
+            End If
+        End Function
+
+
     End Class
+
 End Class

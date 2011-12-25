@@ -2,6 +2,7 @@
 Imports CG.FairShare.Globals
 Imports System.Runtime.Remoting.Channels
 Imports System.Runtime.Remoting.Channels.Tcp
+Imports System.Net.Sockets
 
 Public Class Form1
     Dim ns As RemoteNetworkStateProvider
@@ -15,9 +16,24 @@ Public Class Form1
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        Dim NetState = ns.getNetworkState
-        'Dim users = From usr As UsageStatistics In NetState Select usr.User
-        'Dim usage = From usr As UsageStatistics In NetState Select usr.Consumption
+        Dim NetState() As UsageStatistics
+        Static connectionFailCounter As Integer = 0
+        Try
+            NetState = ns.getNetworkState
+            connectionFailCounter = 0
+        Catch ex As SocketException
+            If ex.Message = "An existing connection was forcibly closed by the remote host" Then
+                End
+
+            ElseIf ex.Message.Contains("No connection could be made because the target machine actively refused it") Then
+                connectionFailCounter += 1
+                If connectionFailCounter > 5 Then End
+                Exit Sub
+
+            Else
+                Throw
+            End If
+        End Try
 
         TextBox1.Text = ""
         Dim users As New ArrayList
