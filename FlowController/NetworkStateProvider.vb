@@ -52,13 +52,6 @@ Public Class NetworkStateProvider
         End SyncLock
     End Function
 
-    ReadOnly Property AvailableInNetwork As Integer
-        Get
-            Dim netState = getNetworkState()
-            Return PIPEWIDTH - (From usgStat As UsageStatistics In netState Select usgStat.Roof).Sum
-        End Get
-    End Property
-
     Private Sub receiver_Received(ByVal RemoteStatistics As UsageStatistics) Handles m_receiver.Received
         SyncLock m_networkState_lock
             If m_networkState.ContainsKey(RemoteStatistics.UserIP.ToLower) Then

@@ -34,14 +34,6 @@ Class SelfGovernor
     End Sub
 
     Function getExpectedRoof(ByVal networkState As UsageStatistics(), ByVal myUsageStatistics As UsageStatistics) As Integer
-        Dim netStateProv As NetworkStateProvider = NetworkStateProvider.GetProvider
-
-        Dim availableInNetwork As Integer = netStateProv.AvailableInNetwork
-        Dim currentStat As UsageStatistics = myUsageStatistics
-        Dim percentageUsage As Integer = (currentStat.Consumption * 100) / currentStat.Roof
-
-        'Console.WriteLine(vbCrLf & "roof:{0,-8} legal:{3,-8} usg:{1,-8} available:{2,-8} pipe:{4,-8}",
-        '                 Int(currentStat.Roof / 1024), Int(currentStat.Consumption / 1024), Int(availableInNetwork / 1024), Int(myLegalShare / 1024), Int(PIPEWIDTH / 1024))
 
         'letzus start here
         Dim totalBanwidth = PIPEWIDTH
@@ -65,7 +57,7 @@ Class SelfGovernor
         '=================      M O D E R A T E     ====================
         '---------------------------------------------------------------
         'this usabe bandwidth should be shared among all NON-IDLE or better ACTIVE users
-        Dim legalShare As Integer = usableBandwidth / activeUsers.Count ' <<<<<<<<<<<------------watch-out devide by zero
+        Dim legalShare As Integer = usableBandwidth / activeUsers.Count  '  <<<<<<<<<<<<----------watch-out for devide by zero
 
         'let us now find all the--
         Dim moderateUses As New List(Of UsageStatistics)
@@ -88,7 +80,7 @@ Class SelfGovernor
                     allotted = legalShare '                                            /
                 End If
                 usableBandwidth -= allotted
-                If LocalStateManager.getManager.IsMyStatistcs(user) Then Return allotted
+                If LocalStateManager.getManager.IsMyStatistcs(user) Then Return legalShare
             End If
         Next
 
