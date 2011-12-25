@@ -29,7 +29,7 @@ Public Class Globals
                 Return MyBase.Equals(obj)
             Else
                 Dim second As UsageStatistics = obj
-                Return second.UserIP.Equals(Me.UserIP)
+                Return second.UserSignature.Equals(Me.UserSignature)
             End If
         End Function
 
