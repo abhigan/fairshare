@@ -3,15 +3,18 @@ Imports CG.FairShare.Globals
 Imports System.Runtime.Remoting.Channels
 Imports System.Runtime.Remoting.Channels.Tcp
 Imports System.Net.Sockets
+Imports System.Net
 
 Public Class Form1
     Dim ns As RemoteNetworkStateProvider
+
+    Dim BACKEND_IP As Integer = 6
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Threading.Thread.Sleep(5)
         ChannelServices.RegisterChannel(New TcpClientChannel, False)
         Dim h As RemoteNetworkStateProvider = Activator.GetObject(GetType(RemoteNetworkStateProvider),
-                                            "tcp://localhost:4949/RemoteNetworkStateProvider")
+                                            "tcp://192.168.1." & BACKEND_IP & ":4949/RemoteNetworkStateProvider")
         ns = h
     End Sub
 
@@ -40,17 +43,31 @@ Public Class Form1
         Dim usage As New ArrayList
         Dim used As Integer = 0
         For Each usr In NetState
-            TextBox1.Text = TextBox1.Text & String.Format("{0,-15}{1,6}", usr.UserIP, usr.Consumption) & vbCrLf
+            TextBox1.Text = TextBox1.Text & String.Format("{0,-12} ({2,-10}) {1,6}", usr.UserIP, usr.Consumption, resolveIP(usr.UserIP)) & vbCrLf
             used += usr.Consumption
-            users.Add(usr.UserIP)
+            users.Add(resolveIP(usr.UserIP))
             usage.Add(usr.Consumption)
         Next
 
         users.Add("Remaining")
         usage.Add(PIPEWIDTH - used)
 
-        Chart1.Series(0).Points.DataBindXY(users.ToArray, usage.ToArray)
+        Chart1.Series(0).Points.DataBindXY(users.ToArray, usage.ToArray)        
 
     End Sub
+
+    Function resolveIP(ByVal ip As String) As String
+        Static knownHosts As New Dictionary(Of String, String)
+        Dim resolvedName As String = ""
+        If Not knownHosts.TryGetValue(ip, resolvedName) Then
+            Try
+                resolvedName = Dns.GetHostEntry(ip).HostName
+                knownHosts.Add(ip, resolvedName)
+            Catch ex As Exception
+                resolvedName = ip
+            End Try
+        End If
+        Return resolvedName
+    End Function
 
 End Class
