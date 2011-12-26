@@ -7,7 +7,7 @@ Imports System.Runtime.Remoting.Channels.Tcp
 Public Class NetworkStateProvider
     Implements INetworkStateProvider
 
-    Private m_networkState As New SortedDictionary(Of String, UsageStatistics)
+    Private m_networkState As New SortedDictionary(Of Guid, UsageStatistics)
     Private m_networkState_lock As New Object
     Private Shared m_instance As New NetworkStateProvider
     Dim WithEvents m_receiver As New Receiver
@@ -43,7 +43,7 @@ Public Class NetworkStateProvider
 
     Public Function getNetworkState() As UsageStatistics() Implements INetworkStateProvider.getNetworkState
         SyncLock m_networkState_lock
-            Dim expired As New List(Of String)
+            Dim expired As New List(Of Guid)
             For Each usr In m_networkState
                 Dim interval As Integer = (Now - usr.Value.TimeStamp).TotalMilliseconds
                 If interval >= 2 * POLLING_INTERVAL Then
@@ -59,12 +59,12 @@ Public Class NetworkStateProvider
 
     Private Sub receiver_Received(ByVal RemoteStatistics As UsageStatistics) Handles m_receiver.Received
         SyncLock m_networkState_lock
-            If m_networkState.ContainsKey(RemoteStatistics.UserIP.ToLower) Then
+            If m_networkState.ContainsKey(RemoteStatistics.UserSignature) Then
                 'we replace the existing
-                m_networkState.Item(RemoteStatistics.UserIP.ToLower) = RemoteStatistics
+                m_networkState.Item(RemoteStatistics.UserSignature) = RemoteStatistics
 
             Else ' we add this user
-                m_networkState.Add(RemoteStatistics.UserIP.ToLower, RemoteStatistics)
+                m_networkState.Add(RemoteStatistics.UserSignature, RemoteStatistics)
             End If
         End SyncLock
     End Sub
