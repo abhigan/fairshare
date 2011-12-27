@@ -72,6 +72,16 @@ Public Class Form1
         Return resolvedName
     End Function
 
+    Private Sub Form1_Move(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Move
+        'If Me Is Nothing Then Exit Sub
+        If Me.WindowState = FormWindowState.Minimized Then
+            Me.Hide()
+            NotifyIcon1.ShowBalloonTip(3000, "Test App",
+            "The App has be moved to the tray.",
+            ToolTipIcon.Info)
+        End If
+    End Sub
+
     Private Sub Form1_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
         SplitContainer2.SplitterDistance = 25
     End Sub
