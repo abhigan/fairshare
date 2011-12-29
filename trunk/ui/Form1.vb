@@ -10,6 +10,11 @@ Imports System.Runtime.Remoting
 Public Class Form1
     Friend ns As INetworkStateProvider
 
+    Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        e.Cancel = True
+        Me.WindowState = FormWindowState.Minimized
+    End Sub
+
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Me.Show()
         Me.Refresh()
@@ -76,9 +81,8 @@ Public Class Form1
         'If Me Is Nothing Then Exit Sub
         If Me.WindowState = FormWindowState.Minimized Then
             Me.Hide()
-            NotifyIcon1.ShowBalloonTip(3000, "Test App",
-            "The App has be moved to the tray.",
-            ToolTipIcon.Info)
+            NotifyIcon1.Visible = True
+            NotifyIcon1.ShowBalloonTip(2000)
         End If
     End Sub
 
@@ -86,12 +90,24 @@ Public Class Form1
         SplitContainer2.SplitterDistance = 25
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click, ctxAbout.Click
         MsgBox(My.Resources.About)
     End Sub
 
     Private Sub ComboBox1_SelectionChangeCommitted(ByVal sender As Object, ByVal e As System.EventArgs) Handles ComboBox1.SelectionChangeCommitted
         Timer1.Enabled = False
         ConnSettingUpDialogue.ShowDialog(Me, CType(sender, ComboBox).SelectedValue)
+    End Sub
+
+    Private Sub NotifyIcon1_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles NotifyIcon1.DoubleClick, ctxOpen.Click
+        NotifyIcon1.Visible = False
+        Me.Show()
+        Me.WindowState = FormWindowState.Normal
+        Me.Activate()
+        Me.Focus()
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
+        End
     End Sub
 End Class
