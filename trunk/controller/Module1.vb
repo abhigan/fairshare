@@ -3,7 +3,6 @@ Imports CG.FairShare.Data
 Imports System.IO
 
 Module Module1
-
     Sub Main()
         Dim n As NetworkStateProvider = NetworkStateProvider.GetProvider
         n.init(True, True)
@@ -23,7 +22,7 @@ Module Module1
                                   stat.UserIP, _
                                   stat.TimeStamp)
             Next
-            Console.WriteLine()
+            Console.WriteLine(n.getNetworkState.Count)
             If Console.KeyAvailable AndAlso (Console.ReadKey).Key = ConsoleKey.Escape Then End
         End While
     End Sub
