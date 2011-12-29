@@ -5,7 +5,7 @@ Public Class LocalStateManager
 
     Private m_state As New UsageStatistics
     Private m_state_lock As New Object
-    Private Shared m_instance As New LocalStateManager
+    Private Shared m_instance As LocalStateManager = Nothing
     Private WithEvents m_sbmHandlerThread As New BackgroundWorker
     Private m_signature As Guid
 
@@ -19,6 +19,9 @@ Public Class LocalStateManager
     End Sub
 
     Shared Function getManager() As LocalStateManager
+        If m_instance Is Nothing Then
+            m_instance = New LocalStateManager
+        End If
         Return m_instance
     End Function
 
