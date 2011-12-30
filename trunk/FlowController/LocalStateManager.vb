@@ -57,10 +57,15 @@ Public Class LocalStateManager
 
     Private Sub m_sbmHandler_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles m_sbmHandlerThread.DoWork
         While True
-            SyncLock m_state_lock
-                m_state = sbmHandler.getMyUsageStatistics()
-                m_state.UserSignature = m_signature
-            End SyncLock
+            Try
+                SyncLock m_state_lock
+                    m_state = sbmHandler.getMyUsageStatistics()
+                    m_state.UserSignature = m_signature
+                End SyncLock
+
+            Catch ex As Exception
+                Trace.WriteLine(ex.ToString)
+            End Try
             Threading.Thread.Sleep(LOCAL_ANALYSIS_DURATION)
         End While
     End Sub

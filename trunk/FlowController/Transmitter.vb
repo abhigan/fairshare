@@ -34,13 +34,18 @@ Public Class Transmitter
     Private Sub sender_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles sender.DoWork
         Dim remoteEndPoint As New IPEndPoint(IPAddress.Broadcast, LISTNER_PORT)
         While True
-            Dim myStats As UsageStatistics = LocalStateManager.getManager.Usage
-            Dim msg = myStats.Roof & "#" & myStats.Consumption & "#" & myStats.UserSignature.ToString
-            Dim txData() As Byte = System.Text.Encoding.ASCII.GetBytes(msg)
-            For Each udpsender In udpSendClients
-                udpsender.Send(txData, txData.Length, remoteEndPoint)
-            Next
-            If CType(sender, BackgroundWorker).CancellationPending Then Exit While
+            Try
+                Dim myStats As UsageStatistics = LocalStateManager.getManager.Usage
+                Dim msg = myStats.Roof & "#" & myStats.Consumption & "#" & myStats.UserSignature.ToString
+                Dim txData() As Byte = System.Text.Encoding.ASCII.GetBytes(msg)
+                For Each udpsender In udpSendClients
+                    udpsender.Send(txData, txData.Length, remoteEndPoint)
+                Next
+                If CType(sender, BackgroundWorker).CancellationPending Then Exit While
+
+            Catch ex As Exception
+                Trace.WriteLine(ex.ToString)
+            End Try
             Threading.Thread.Sleep(POLLING_INTERVAL)
         End While
     End Sub
