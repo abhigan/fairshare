@@ -13,22 +13,25 @@ Class SelfGovernor
 
     Private Sub governor_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles governor.DoWork
         Dim netStateProv As NetworkStateProvider = NetworkStateProvider.GetProvider
-
         While True
-            Dim expectedRoof As Integer
-            Dim myUsageStatistics = LocalStateManager.getManager.Usage
-            expectedRoof = getExpectedRoof(netStateProv.getNetworkState, myUsageStatistics)
+            Try
+                Dim expectedRoof As Integer
+                Dim myUsageStatistics = LocalStateManager.getManager.Usage
+                expectedRoof = getExpectedRoof(netStateProv.getNetworkState, myUsageStatistics)
 
-            'self correcting routing when my roof is illigally large
-            If myUsageStatistics.Roof > PIPEWIDTH - BAREMINIMUM Then
-                expectedRoof = PIPEWIDTH - BAREMINIMUM
-            End If
+                'self correcting routing when my roof is illigally large
+                If myUsageStatistics.Roof > PIPEWIDTH - BAREMINIMUM Then
+                    expectedRoof = PIPEWIDTH - BAREMINIMUM
+                End If
 
-            'resist small changes
-            If Math.Abs(expectedRoof - myUsageStatistics.Roof) / 1024 > 1 Then
-                LocalStateManager.getManager.SetRoof(expectedRoof)
-            End If
+                'resist small changes
+                If Math.Abs(expectedRoof - myUsageStatistics.Roof) / 1024 > 1 Then
+                    LocalStateManager.getManager.SetRoof(expectedRoof)
+                End If
 
+            Catch ex As Exception
+                Trace.WriteLine(ex.ToString)
+            End Try
             Threading.Thread.Sleep(POLLING_INTERVAL)
         End While
     End Sub

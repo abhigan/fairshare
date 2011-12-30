@@ -26,24 +26,29 @@ Class Receiver
         udpListner.Bind(endPoint)
 
         While True
-            Dim rcvData(100) As Byte
-            Dim remoteStat As New UsageStatistics
-            Dim remoteHost As New IPEndPoint(IPAddress.Any, 0)
-            Dim l = udpListner.ReceiveFrom(rcvData, remoteHost)
-            Dim msg As String = System.Text.Encoding.ASCII.GetString(rcvData, 0, l)
-            Dim msg2() = msg.Split("#")
-            remoteStat.Roof = msg2(0)
-            remoteStat.Consumption = msg2(1)
-            remoteStat.UserSignature = Guid.Parse(msg2(2))
-            remoteStat.TimeStamp = Now
-            remoteStat.UserIP = remoteHost.Address.ToString
-            RaiseEvent Received(remoteStat)
+            Try
+                Dim rcvData(100) As Byte
+                Dim remoteStat As New UsageStatistics
+                Dim remoteHost As New IPEndPoint(IPAddress.Any, 0)
+                Dim l = udpListner.ReceiveFrom(rcvData, remoteHost)
+                Dim msg As String = System.Text.Encoding.ASCII.GetString(rcvData, 0, l)
+                Dim msg2() = msg.Split("#")
+                remoteStat.Roof = msg2(0)
+                remoteStat.Consumption = msg2(1)
+                remoteStat.UserSignature = Guid.Parse(msg2(2))
+                remoteStat.TimeStamp = Now
+                remoteStat.UserIP = remoteHost.Address.ToString
+                RaiseEvent Received(remoteStat)
 
-            If CType(sender, BackgroundWorker).CancellationPending Then
-                'udpListner.Disconnect(True)
-                udpListner.Dispose()
-                Exit While
-            End If
+                If CType(sender, BackgroundWorker).CancellationPending Then
+                    'udpListner.Disconnect(True)
+                    udpListner.Dispose()
+                    Exit While
+                End If
+
+            Catch ex As Exception
+                Trace.WriteLine(ex.ToString)
+            End Try
             Threading.Thread.Sleep(100)
         End While
     End Sub
