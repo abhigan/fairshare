@@ -81,7 +81,7 @@ Class sbmHandler
 
     Private Shared Function getAuth() As String
         Dim uName = "admin"
-        Dim pass = ""
+        Dim pass = "sharefair"
 
         Dim auth = uName & ":" & pass
         Dim base64auth(100) As Char
