@@ -20,7 +20,7 @@ Module Module1
         While True
             Threading.Thread.Sleep(POLLING_INTERVAL)
             For Each stat As UsageStatistics In n.getNetworkState
-                Console.WriteLine("USER:{2,-20} ROOF:{0,-8} USAGE:{1,-8} {3,hh:mm:ss}", _
+                Console.WriteLine("USER:{2,-20} ROOF:{0,-8} USAGE:{1,-8} {3:hh:mm:ss}", _
                                   Int(stat.Roof / 1024), _
                                   Int(stat.Consumption / 1024), _
                                   stat.UserIP, _
