@@ -13,8 +13,13 @@ Public Class LocalStateManager
         'enforce singleton pattern
         m_signature = Guid.NewGuid
         SyncLock m_state_lock
-            m_state = sbmHandler.getMyUsageStatistics()
-            m_state.UserSignature = m_signature
+            Try
+                m_state = sbmHandler.getMyUsageStatistics()
+                m_state.UserSignature = m_signature
+
+            Catch ex As Exception
+                Trace.WriteLine(ex.ToString)
+            End Try
         End SyncLock
     End Sub
 
