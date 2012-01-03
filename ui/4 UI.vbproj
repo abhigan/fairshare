@@ -44,6 +44,9 @@
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>fairshare.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -145,6 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\fairshare.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fairshare.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
