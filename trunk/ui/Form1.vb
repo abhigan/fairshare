@@ -108,6 +108,7 @@ Public Class Form1
     End Sub
 
     Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
+        NotifyIcon1.Visible = False
         End
     End Sub
 End Class
