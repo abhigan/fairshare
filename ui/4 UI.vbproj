@@ -134,9 +134,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Constants\1 Constants.vbproj">
+    <ProjectReference Include="..\1. Constants\1 Constants.vbproj">
       <Project>{D9DC1488-230A-4FF2-B7C6-FEF42BC7F4B8}</Project>
-      <Name>Constants</Name>
+      <Name>1 Constants</Name>
     </ProjectReference>
     <ProjectReference Include="..\FlowController\2 Data.vbproj">
       <Project>{301BE533-ED84-4883-A976-9A39D261AFB7}</Project>
