@@ -115,13 +115,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Constants\1 Constants.vbproj">
+    <None Include="Resources\setrule.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\1. Constants\1 Constants.vbproj">
       <Project>{D9DC1488-230A-4FF2-B7C6-FEF42BC7F4B8}</Project>
       <Name>1 Constants</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\setrule.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
